@@ -1,8 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App';
 
-Vue.config.productionTip = false
+new Vue ({
+    //el: '#app', -> exact same .$mount(#app)
+    render: h => h(App)
+}).$mount('#app');
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+// render: function(h) { // h = createElemnet
+//     return h(App);
+// }
