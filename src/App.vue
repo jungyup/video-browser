@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <div class="container">
         <SearchBar @termChange="onTermChange"></SearchBar>
-        <VideoList></VideoList>
+        <VideoList @videoSelect="onVideoSelect" :videos="videos"></VideoList> 
+        <!-- whatever inside "" is property that we want to share in Parent and left videos the name of the property that we want to show on Child -->
     </div>
 </template>
 
@@ -18,7 +19,15 @@ export default {
         SearchBar,
         VideoList
     },
+    data() {
+        return {
+            videos: []
+        }
+    },
     methods: {
+        onVideoSelect(video) {
+            console.log(video);
+        },
         onTermChange(searchTerm) {
             axios.get('https://www.googleapis.com/youtube/v3/search', {
                 params: {
@@ -27,7 +36,9 @@ export default {
                     part: 'snippet',
                     q: searchTerm
                 }
-            }).then(response => console.log(response));
+            }).then(response => {
+                this.videos = response.data.items;
+            });
         }
     }
 };
